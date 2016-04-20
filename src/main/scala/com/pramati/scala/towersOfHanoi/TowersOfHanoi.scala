@@ -21,6 +21,7 @@ object TowersOfHanoi {
           println("From :" + towers(0))
           println("To   :" + towers(1))
           println("temp :" + towers(2))
+
           val moves = doTowersOfHanoi(nDisks, 0, 1, 2)
 
           moves.foreach(println)

@@ -8,7 +8,7 @@ trait A {}     // to define higher type
 
 case class Disk(size: Int) extends A     // disk of type A
 case class Move(from: Int, to:Int, disk: Disk) {          // Move is to store the steps of process
-  override def toString():String = "Moving " + disk +" from " + from + " to " + to
+  override def toString():String = "Moving " + disk +" from tower " + from + " to tower " + to
 }
 
 case class InvalidMoveException(message: String) extends Exception  // Internal Exceptions
