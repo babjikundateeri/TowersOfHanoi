@@ -18,6 +18,7 @@ object TowersOfHanoi {
         }
         case _ => {
           towers(0) = getTowerWithDisks(nDisks)
+
           println("From :" + towers(0))
           println("To   :" + towers(1))
           println("temp :" + towers(2))
@@ -65,20 +66,19 @@ object TowersOfHanoi {
   }
 
   def getTowerWithDisks(size:Int): Tower[Disk] = {
-    var tower: Tower[Disk] = new Tower[Disk];
-    @annotation.tailrec
-      def go(n: Int) :Unit = {
-        n match {
-          case 0 =>
-            return
-          case _ =>
-            tower = tower.push(Disk(n))
+   //@annotation.tailrec
+      def go(n: Int) :Tower[Disk] = {
+        n compare size match {
+          case 1 => {
+            // should return from looping
+            return new Tower[Disk]
+          }
+          case _ => {
+            return go(n+1).push(Disk(n))
+          }
         }
-        go(n -1)
       }
-
-    go(size)
-    return tower
+    go(1)
   }
 
   def getInputFromUser(): Int = {
