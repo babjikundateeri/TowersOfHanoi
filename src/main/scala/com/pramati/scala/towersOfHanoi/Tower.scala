@@ -4,15 +4,24 @@ package com.pramati.scala.towersOfHanoi
   * Created by babjik on 19/4/16.
   */
 
-trait A {}
+trait A {}     // to define higher type
 
-case class Disk(size: Int) extends A
-case class Move(from: String, to:String, disk: Disk) {
+case class Disk(size: Int) extends A     // disk of type A
+case class Move(from: String, to:String, disk: Disk) {          // Move is to store the steps of process
   override def toString():String = "Moving " + disk +" from " + from + " to " + to
 }
 
-case class InvalidMoveException(message: String) extends Exception
+case class InvalidMoveException(message: String) extends Exception  // Internal Exceptions
 case class EmptyTowerException(message:String) extends Exception
+
+/**
+  * @tparam A @Tower with the type A
+  *
+  *  1. Immutable data structure
+  *  2. While Push should check for the condition (i.e. Larger disk can not be placed over Smaller disk)
+  *  3. can remove only one disk at one step
+  *  4. can push only once disk to tower at one step
+  */
 
 class Tower[A <: Disk] {
   def push(elem: A): Tower[A] = {
