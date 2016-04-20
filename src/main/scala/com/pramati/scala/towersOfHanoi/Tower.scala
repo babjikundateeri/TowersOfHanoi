@@ -7,7 +7,7 @@ package com.pramati.scala.towersOfHanoi
 trait A {}     // to define higher type
 
 case class Disk(size: Int) extends A     // disk of type A
-case class Move(from: String, to:String, disk: Disk) {          // Move is to store the steps of process
+case class Move(from: Int, to:Int, disk: Disk) {          // Move is to store the steps of process
   override def toString():String = "Moving " + disk +" from " + from + " to " + to
 }
 
@@ -32,7 +32,8 @@ class Tower[A <: Disk] {
           throw InvalidMoveException("Disk with size " + elem.size + " cann't be placed over the disk with size " + this.top.size);
         }
         case false => {
-          println("do nothing, disk allowed to place..");
+          // We can proceed with the move
+          //println("do nothing, disk allowed to place..");
         }
       }
     } catch {
@@ -41,7 +42,8 @@ class Tower[A <: Disk] {
         throw e
       }
       case e: EmptyTowerException => {
-        println("It might be first element to the Tower")
+        // where we insert first disk to the tower, top will result this exception
+        //println("It might be first element to the Tower")
       }
     }
 

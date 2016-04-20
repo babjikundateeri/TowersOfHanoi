@@ -1,11 +1,14 @@
 package com.pramati.scala.towersOfHanoi
 
+import scala.annotation.tailrec
+
+
 /**
   * Created by babjik on 19/4/16.
   */
 object TowersOfHanoi {
 
-
+  val towers: Array[Tower[Disk]] = Array(new Tower[Disk], new Tower[Disk], new Tower[Disk]);
 
   def main (args: Array[String]) : Unit = {
       val nDisks: Int = getInputFromUser()
@@ -14,9 +17,67 @@ object TowersOfHanoi {
           println("Try again with valid input")
         }
         case _ => {
-          println(s"Proceeding with the count ${nDisks}")
+          towers(0) = getTowerWithDisks(nDisks)
+          println("From :" + towers(0))
+          println("To   :" + towers(1))
+          println("temp :" + towers(2))
+          val moves = doTowersOfHanoi(nDisks, 0, 1, 2)
+
+          moves.foreach(println)
+
+          println("From :" + towers(0))
+          println("To   :" + towers(1))
+          println("temp :" + towers(2))
         }
       }
+  }
+
+  /**
+    *  if n = 1, move fromStack to toStack
+    *  else
+    *  move n-1 disks to temp stack
+    *  move nth disk to toStack
+    *  move n-1 disks from temp stack to toStack
+    */
+  def doTowersOfHanoi(nDisk:Int, from: Int, to:Int, temp: Int): List[Move] = {
+
+      nDisk match {
+        case 1 => {
+           val disk = towers(from).top
+           towers(from) = towers(from).pop
+           towers(to) = towers(to).push(disk)
+           List(Move(from, to, disk))
+        }
+        case _ => {
+          // move n-1 disks to temp stack
+            val listx = doTowersOfHanoi(nDisk-1, from, temp, to)
+          // move nth disk to toStack
+            val disk = towers(from).top
+            towers(from) = towers(from).pop
+            towers(to) = towers(to).push(disk)
+            val listy = List(Move(from, to, disk))
+          // move n-1 disks from temp stack to toStack
+            val listz = doTowersOfHanoi(nDisk-1, temp, to, from)
+            listx ::: listy ::: listz
+        }
+      }
+  }
+
+  def getTowerWithDisks(size:Int): Tower[Disk] = {
+    var tower: Tower[Disk] = new Tower[Disk];
+    @annotation.tailrec
+      def go(n: Int) :Unit = {
+        n match {
+          case 0 =>
+            return
+          case _ =>
+            tower = tower.push(Disk(n))
+        }
+        go(n -1)
+      }
+
+    go(size)
+    return tower
   }
 
   def getInputFromUser(): Int = {
