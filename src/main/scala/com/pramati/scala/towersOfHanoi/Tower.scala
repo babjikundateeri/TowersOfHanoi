@@ -4,14 +4,13 @@ package com.pramati.scala.towersOfHanoi
   * Created by babjik on 19/4/16.
   */
 
-trait A {}     // to define higher type
+trait IDisk {}     // to define higher type
 
-case class Disk(size: Int) extends A     // disk of type A
+case class Disk(size: Int) extends IDisk     // disk of type A
 case class Move(from: Int, to:Int, disk: Disk) {          // Move is to store the steps of process
   override def toString():String = "Moving " + disk +" from tower " + from + " to tower " + to
 }
 
-case class InvalidMoveException(message: String) extends Exception  // Internal Exceptions
 case class EmptyTowerException(message:String) extends Exception
 
 /**
@@ -26,34 +25,44 @@ case class EmptyTowerException(message:String) extends Exception
 class Tower[A <: Disk] {
   def push(elem: A): Tower[A] = {
 
-    try {
-      this.top.size < elem.size match {
-        case true => {
-          throw InvalidMoveException("Disk with size " + elem.size + " cann't be placed over the disk with size " + this.top.size);
+    Tower.this.size.toInt > 0 match {
+      case false => {}
+      case true => {
+        this.top.size < elem.size match {
+          case true => throw new IllegalStateException("Disk with size " + elem.size + " cann't be placed over the disk with size " + this.top.size)
+          case false => {}
         }
-        case false => {
-          // We can proceed with the move
-          //println("do nothing, disk allowed to place..");
-        }
-      }
-    } catch {
-      case e: InvalidMoveException => {
-        println(e.message)
-        throw e
-      }
-      case e: EmptyTowerException => {
-        // where we insert first disk to the tower, top will result this exception
-        //println("It might be first element to the Tower")
       }
     }
 
     new Tower[A] {
+      override def size: Int =  Tower.this.size + 1
       override def top: Disk = elem
       override def pop: Tower[A] = Tower.this
       override def toString(): String = elem.toString() + " " + Tower.this.toString()
     }
   }
+  def size: Int = 0
   def top: Disk = throw EmptyTowerException("No Disks are in Tower for top ")
   def pop: Tower[A] = throw EmptyTowerException("No Disks are in Tower to pop")
   override def toString(): String = ""
+}
+
+
+object Tower {
+  def getTowerWithDisks(size:Int): Tower[Disk] = {
+    //@annotation.tailrec
+    def go(n: Int) :Tower[Disk] = {
+      n compare size match {
+        case 1 => {
+          // should return from looping
+          return new Tower[Disk]
+        }
+        case _ => {
+          return go(n+1).push(Disk(n))
+        }
+      }
+    }
+    go(1)
+  }
 }

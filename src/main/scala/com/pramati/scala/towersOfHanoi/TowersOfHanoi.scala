@@ -17,7 +17,7 @@ object TowersOfHanoi {
           println("Try again with valid input")
         }
         case _ => {
-          towers(0) = getTowerWithDisks(nDisks)
+          towers(0) = Tower.getTowerWithDisks(nDisks)
 
           println("From :" + towers(0))
           println("To   :" + towers(1))
@@ -30,6 +30,8 @@ object TowersOfHanoi {
           println("From :" + towers(0))
           println("To   :" + towers(1))
           println("temp :" + towers(2))
+
+          println("No of Moves includes " + moves.size)
         }
       }
   }
@@ -65,21 +67,7 @@ object TowersOfHanoi {
       }
   }
 
-  def getTowerWithDisks(size:Int): Tower[Disk] = {
-   //@annotation.tailrec
-      def go(n: Int) :Tower[Disk] = {
-        n compare size match {
-          case 1 => {
-            // should return from looping
-            return new Tower[Disk]
-          }
-          case _ => {
-            return go(n+1).push(Disk(n))
-          }
-        }
-      }
-    go(1)
-  }
+
 
   def getInputFromUser(): Int = {
     print("Enter number of disks to move : ")
