@@ -1,21 +1,18 @@
 package com.pramati.scala.towersofhanoi
 
-import scala.annotation.tailrec
-
 
 /**
   * Created by babjik on 19/4/16.
   */
 object TowersOfHanoi {
 
-  val towers: Array[Tower[Disk]] = Array(new Tower[Disk], new Tower[Disk], new Tower[Disk]);
+  val towers: Array[Tower[Disk]] = Array(new Tower[Disk], new Tower[Disk], new Tower[Disk])
 
   def main (args: Array[String]) : Unit = {
       val nDisks: Int = getInputFromUser()
       nDisks  match {
-        case 0 => {
+        case 0 =>
           println("Try again with valid input")
-        }
         case _ => {
           towers(0) = Tower(nDisks)
 
@@ -46,24 +43,22 @@ object TowersOfHanoi {
   def doTowersOfHanoi(nDisk:Int, from: Int, to:Int, temp: Int): List[Move] = {
 
       nDisk match {
-        case 1 => {
-           val disk = towers(from).top
-           towers(from) = towers(from).pop
-           towers(to) = towers(to).push(disk)
-           List(Move(from, to, disk))
-        }
-        case _ => {
+        case 1 =>
+          val disk = towers(from).top
+          towers(from) = towers(from).pop
+          towers(to) = towers(to).push(disk)
+          List(Move(from, to, disk))
+        case _ =>
           // move n-1 disks to temp stack
             val listx = doTowersOfHanoi(nDisk-1, from, temp, to)
           // move nth disk to toStack
             val disk = towers(from).top
-            towers(from) = towers(from).pop
-            towers(to) = towers(to).push(disk)
-            val listy = List(Move(from, to, disk))
+          towers(from) = towers(from).pop
+          towers(to) = towers(to).push(disk)
+          val listy = List(Move(from, to, disk))
           // move n-1 disks from temp stack to toStack
             val listz = doTowersOfHanoi(nDisk-1, temp, to, from)
-            listx ::: listy ::: listz
-        }
+          listx ::: listy ::: listz
       }
   }
 

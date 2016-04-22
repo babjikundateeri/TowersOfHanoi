@@ -11,6 +11,9 @@ val junit = "com.novocode" % "junit-interface" % "0.11" % "test"
 // scalatest dependecy
 val scalatest = "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
 
+// scala mock lib depedency
+val mock = "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test"
+
 
 lazy val commonSettings = Seq (
     name := "ScalaTowersOfHanoi",
@@ -22,6 +25,7 @@ lazy val commonSettings = Seq (
 lazy val depedencySettings = Seq (
 	libraryDependencies += logback,
 	libraryDependencies += scalatest,
+	libraryDependencies += mock,
 	libraryDependencies += junit
 )
 
