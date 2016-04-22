@@ -1,56 +1,49 @@
 package com.pramati.scala.towersofhanoi
 
-import org.junit.Test
-import org.scalatest.Assertions
+import org.scalatest.FunSuite
 
 /**
   * Created by babjik on 22/4/16.
   */
-class TowerSuite extends Assertions{
+class TowerSuite extends FunSuite{
 
-  // creating tower of type Tower[Disk]
-  @Test
-  def creationOfStack(): Unit = {
+  test("creating tower of type Tower[Disk]") {
     val size: Int = 5
     val tower = Tower(size)
-
     tower match {
       case d : Tower[Disk] => assert(true)
       case _ => fail("tower is not a type of Tower[Disk]")
     }
   }
 
-  //  checking the size is properly created or not
-  @Test
-  def checkSizeOfStack(): Unit = {
+  test("pop is invoked on a non-empty tower") {
+    val tower = Tower(0)
+    intercept [IllegalAccessException] {
+      tower.pop
+    }
+  }
+
+  test("top is invoked on a non-empty tower") {
+    val tower = Tower(0)
+    intercept [IllegalAccessException] {
+      tower.pop
+    }
+  }
+
+  test ("testing for push larger disk on smaller") {
+    var tower = Tower(5)
+    intercept[IllegalStateException] {
+      tower.push(Disk(10))
+    }
+  }
+
+  test ("checking the size is properly created or not") {
     val size: Int = 5
     val tower = Tower(size)
     assert(tower.size == size)
   }
 
-  // creating a empty tower, access the top to check exception
-  @Test
-  def checkingTopOfEmptyTower(): Unit = {
-    val tower = Tower(0)
-    assert(tower.size == 0)
-    intercept[IllegalAccessException] {
-      println(tower.top)
-    }
-  }
-
-  // creating a empty tower and Pop to check exception
-  @Test
-  def checkingPopOfEmptyTower(): Unit = {
-    val tower = Tower(0)
-    assert(tower.size == 0)
-    intercept[IllegalAccessException] {
-      println(tower.pop)
-    }
-  }
-
-  // checking size after incremental pushing elements
-  @Test
-  def checkSizeOnPushAndPop(): Unit = {
+  test ("checking size after incremental pushing elements") {
     var tower = Tower(0)
     assert(tower.size == 0)
 
@@ -64,15 +57,6 @@ class TowerSuite extends Assertions{
 
     tower = tower.pop
     assert(tower.size == 1)
-  }
-
-  //testing for push larger disk on smaller
-  @Test
-  def testForPush(): Unit ={
-    var tower = Tower(5)
-    intercept[IllegalStateException] {
-      tower.push(Disk(10))
-    }
   }
 
 
