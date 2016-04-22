@@ -1,4 +1,4 @@
-package com.pramati.scala.towersOfHanoi
+package com.pramati.scala.towersofhanoi
 
 import scala.annotation.tailrec
 
@@ -17,7 +17,7 @@ object TowersOfHanoi {
           println("Try again with valid input")
         }
         case _ => {
-          towers(0) = Tower.getTowerWithDisks(nDisks)
+          towers(0) = Tower(nDisks)
 
           println("From :" + towers(0))
           println("To   :" + towers(1))

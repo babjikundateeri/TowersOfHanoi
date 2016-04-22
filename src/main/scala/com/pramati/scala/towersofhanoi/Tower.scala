@@ -1,4 +1,4 @@
-package com.pramati.scala.towersOfHanoi
+package com.pramati.scala.towersofhanoi
 
 /**
   * Created by babjik on 19/4/16.
@@ -10,8 +10,6 @@ case class Disk(size: Int) extends IDisk     // disk of type A
 case class Move(from: Int, to:Int, disk: Disk) {          // Move is to store the steps of process
   override def toString():String = "Moving " + disk +" from tower " + from + " to tower " + to
 }
-
-case class EmptyTowerException(message:String) extends Exception
 
 /**
   * @tparam A @Tower with the type A
@@ -43,17 +41,16 @@ class Tower[A <: Disk] {
     }
   }
   def size: Int = 0
-  def top: Disk = throw EmptyTowerException("No Disks are in Tower for top ")
-  def pop: Tower[A] = throw EmptyTowerException("No Disks are in Tower to pop")
+  def top: Disk = throw new IllegalAccessException("No Disks are in Tower for top ")
+  def pop: Tower[A] = throw new IllegalAccessException("No Disks are in Tower to pop")
   override def toString(): String = ""
 }
 
 
 object Tower {
-  def getTowerWithDisks(size:Int): Tower[Disk] = {
-    //@annotation.tailrec
+  def apply(x: Int):Tower[Disk] = {
     def go(n: Int) :Tower[Disk] = {
-      n compare size match {
+      n compare x match {
         case 1 => {
           // should return from looping
           return new Tower[Disk]
