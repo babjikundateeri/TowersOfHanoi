@@ -7,8 +7,8 @@ import org.scalatest.FunSuite
   */
 class TowersOfHanoiSuite extends FunSuite {
 
-  test ("check for input ") {
+  test ("check for user input ") {
 
-    val nDisks = TowersOfHanoi.getInputFromUser()
+    //val nDisks = TowersOfHanoi.getInputFromUser()
   }
 }

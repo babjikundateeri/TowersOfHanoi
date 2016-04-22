@@ -9,11 +9,11 @@ object TowersOfHanoi {
   val towers: Array[Tower[Disk]] = Array(new Tower[Disk], new Tower[Disk], new Tower[Disk])
 
   def main (args: Array[String]) : Unit = {
-      val nDisks: Int = getInputFromUser()
+      val nDisks: Int = getInputFromUser
       nDisks  match {
         case 0 =>
           println("Try again with valid input")
-        case _ => {
+        case _ =>
           towers(0) = Tower(nDisks)
 
           println("From :" + towers(0))
@@ -29,7 +29,6 @@ object TowersOfHanoi {
           println("temp :" + towers(2))
 
           println("No of Moves includes " + moves.size)
-        }
       }
   }
 
@@ -50,28 +49,27 @@ object TowersOfHanoi {
           List(Move(from, to, disk))
         case _ =>
           // move n-1 disks to temp stack
-            val listx = doTowersOfHanoi(nDisk-1, from, temp, to)
+          val listx = doTowersOfHanoi(nDisk-1, from, temp, to)
           // move nth disk to toStack
-            val disk = towers(from).top
+          val disk = towers(from).top
           towers(from) = towers(from).pop
           towers(to) = towers(to).push(disk)
           val listy = List(Move(from, to, disk))
           // move n-1 disks from temp stack to toStack
-            val listz = doTowersOfHanoi(nDisk-1, temp, to, from)
+          val listz = doTowersOfHanoi(nDisk-1, temp, to, from)
           listx ::: listy ::: listz
       }
   }
 
 
 
-  def getInputFromUser(): Int = {
+  def getInputFromUser: Int = {
     print("Enter number of disks to move : ")
     try {
       val nDisks = scala.io.StdIn.readInt()
       nDisks compare 0 match {
-        case  1 => {
+        case  1 =>
           return nDisks
-        }
         case _ =>
           println("Please enter only Positive numbers")
       }
@@ -81,6 +79,6 @@ object TowersOfHanoi {
       case e: Exception =>
         println(e.getMessage)
     }
-    return 0
+    0
   }
 }
